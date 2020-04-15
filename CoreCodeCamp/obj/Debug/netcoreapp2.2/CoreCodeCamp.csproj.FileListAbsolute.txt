@@ -1,0 +1,14 @@
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\bin\Debug\netcoreapp2.2\CoreCodeCamp.deps.json
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\bin\Debug\netcoreapp2.2\CoreCodeCamp.runtimeconfig.json
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\bin\Debug\netcoreapp2.2\CoreCodeCamp.runtimeconfig.dev.json
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\bin\Debug\netcoreapp2.2\CoreCodeCamp.dll
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\bin\Debug\netcoreapp2.2\CoreCodeCamp.pdb
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.csprojAssemblyReference.cache
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.csproj.CoreCompileInputs.cache
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.RazorAssemblyInfo.cache
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.RazorAssemblyInfo.cs
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.AssemblyInfoInputs.cache
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.AssemblyInfo.cs
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.RazorTargetAssemblyInfo.cache
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.dll
+C:\Ldev\CoreCodeCamp\CoreCodeCamp\obj\Debug\netcoreapp2.2\CoreCodeCamp.pdb
