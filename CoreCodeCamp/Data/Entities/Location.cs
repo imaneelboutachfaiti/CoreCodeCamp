@@ -1,4 +1,4 @@
-﻿
+﻿ 
 namespace CoreCodeCamp.Data
 {
     public class Location
