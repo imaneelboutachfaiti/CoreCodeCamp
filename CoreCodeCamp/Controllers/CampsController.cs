@@ -7,22 +7,37 @@ using CoreCodeCamp.Data;
 using CoreCodeCamp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace CoreCodeCamp.Controllers
 {
-    
+
     [Route("api/[controller]")]
+    [ApiController]
     public class CampsController : ControllerBase
     {
         private readonly ICampRepository _repository;
         private readonly IMapper _mapper;
+        private readonly LinkGenerator _linkGenerator;
 
-        public CampsController(ICampRepository repository,IMapper mapper)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CampsController"/> class.
+        /// </summary>
+        /// <param name="repository">The repository.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="linkGenerator">The link generator.</param>
+        public CampsController(ICampRepository repository,IMapper mapper, LinkGenerator linkGenerator)
         {
             _repository = repository;
             _mapper = mapper;
+            _linkGenerator = linkGenerator;
         }
 
+        /// <summary>
+        /// Gets the specified include talks.
+        /// </summary>
+        /// <param name="includeTalks">if set to <c>true</c> [include talks].</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<CampModel[]>> Get(bool includeTalks = false)
         {
@@ -35,14 +50,19 @@ namespace CoreCodeCamp.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError,"Database failure");
             }
-         
         }
-        [HttpGet("{monikor}")]
-        public async Task<ActionResult <CampModel>> Get( string monikor)
+
+        /// <summary>
+        /// Gets the specified monikor.
+        /// </summary>
+        /// <param name="monikor">The monikor.</param>
+        /// <returns></returns>
+        [HttpGet("{moniker}")]
+        public async Task<ActionResult <CampModel>> Get( string moniker)
         {
             try
             {
-                var result = await _repository.GetCampAsync(monikor);
+                var result = await _repository.GetCampAsync(moniker);
                 if (result == null) return NotFound();
                 return _mapper.Map<CampModel>(result);
             }
@@ -52,6 +72,12 @@ namespace CoreCodeCamp.Controllers
             }
         }
 
+        /// <summary>
+        /// Searches the by date.
+        /// </summary>
+        /// <param name="theDate">The date.</param>
+        /// <param name="includeTalks">if set to <c>true</c> [include talks].</param>
+        /// <returns></returns>
         [HttpGet("Search")]
         public async Task<ActionResult<CampModel[]>> SearchByDate (DateTime theDate,bool includeTalks = false )
         {
@@ -65,6 +91,38 @@ namespace CoreCodeCamp.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
             }
+        }
+
+        public async Task<ActionResult<CampModel>> Post(CampModel model)
+        {
+            try
+            {
+                var existing = await _repository.GetCampAsync(model.Moniker);
+                if(existing != null)
+                {
+                    return BadRequest(" Moniker in use ");
+                }
+
+                var location = _linkGenerator.GetPathByAction("Get", "Camps",
+                    new  { moniker = model.Moniker });
+                if (string.IsNullOrWhiteSpace(location))
+                {
+                    return BadRequest("Could not use current moniker");
+                }
+
+                // Create a new camp
+                var camp = _mapper.Map<Camp>(model);
+                _repository.Add(camp);
+                if (await _repository.SaveChangesAsync())
+                { 
+                return Created($"/api/camps/{camp.Moniker}", _mapper.Map<CampModel>(camp) );
+                }
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
+            }
+           return BadRequest();
         }
     }
 }
